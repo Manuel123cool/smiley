@@ -18,14 +18,14 @@ Comments are something we feel bad about, nobody like it to be ignored, it is ma
 
 Variable declaration is simply  positive, so the emoji too. It starts with a smiley then the identifier and ends with with the value of the variable. And no one cares about if you type is integer ore what ever, this language is not type save. The identifier can be anything, it just must start and end with a  white space, in it shouldn't be white spaces.
 
-:) someInteger 123
+:) someInteger 123 <br>
 :) string “hallo”
 
 As you see the language is line sensitive and has no semicolons.
 
 There is nothing cooler then showing what you got. Printing something is boss like. So to print something start with the boss emoji then the identifier which value will be printed.
 
-:) someValue “Hallo Welt”
+:) someValue “Hallo Welt” <br>
 B) someIdentifier
 
 To get user input is kind of cool too. Just do the extended cool emoji then a identifier to store and     
@@ -33,13 +33,10 @@ to get the value.
 
 B-) someIdentifier
 
-
-
-
 Calculating  things is just brutal boring. So to do so we have hybrid sad with the operand in the middle. And after this leave a space and then put the two value separated by a white space after that.
 The last must be a identifier of an variable. 
 
-:+S 123 plus2
-:-S minus1 minus2
-:*S mult1 mult2
+:+S 123 plus2 <br> 
+:-S minus1 minus2 <br>
+:*S mult1 mult2 <br>
 :/S div1 div2
