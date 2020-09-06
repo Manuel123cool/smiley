@@ -1,0 +1,10 @@
+:) enterValue "PLeace enter value"
+B) enterValue 
+B-) firstValue
+
+B) enterValue
+B-) secondValue
+
+:+S firstValue secondValue :( hallo Welt :(
+B) secondValue
+
