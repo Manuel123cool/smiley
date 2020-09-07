@@ -43,15 +43,12 @@ The last must be a identifier of an variable.
 
 If your program gets more complex, and the identifier could be mix up, in general you want order. Because  you surround you particular code, it’s like hugging, we use the hugging emoji. The instruction should like all instruction be in its own line.
 ```
-:) text “Hello World” 
-B) text	
-
 ><  :( my own invention of a hugging emoji :( 
 	:) text “Hello World I am nested in a block" 
 	B) text        :( this prints the text right above :( 
 <> :( a twisted hug emoji :( 
 
-B) text :(  this will print the first version of text (“Hello World”) :( 
+B) text :(  this will give an error, becouse text is in its own name space :( 
 ```
 Hint: you cant coppy this do to weird formatting.
 
