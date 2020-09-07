@@ -42,7 +42,7 @@ The last must be a identifier of an variable.
 :/S div1 div2
 
 If your program gets more complex, and the identifier could be mix up, in general you want order. Because  you surround you particular code, it’s like hugging, we use the hugging emoji. The instruction should like all instruction be in its own line.
-
+<code>
 :) text “Hello World” <br>
 B) text	<br>
 
@@ -52,6 +52,6 @@ B) text	<br>
 <> :( a twisted hug emoji :( <br>
 
 B) text :(  this will print the first version of text (“Hello World”) :( <br>
-
+</code>
 Because the hugging instruction create its own name space.  <br>
 
