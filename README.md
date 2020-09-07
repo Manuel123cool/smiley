@@ -53,4 +53,6 @@ B) text
 
 B) text :(  this will print the first version of text (“Hello World”) :( 
 ```
+Hint: you cant coppy this do to weird formatting.
+
 Because the hugging instruction create its own name space.  <br>
