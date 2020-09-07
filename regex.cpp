@@ -29,8 +29,9 @@ void MyRegex::testComandPrint(std::string code, Stack &stack)
     for(const auto &c : code)
     {
         if (start)
+        {
             identifier += c;
-   
+        } 
         if (c == ' ' && !start)
             start = true;
     }

@@ -1,13 +1,6 @@
-e) text "hallo Welt"
-B) text
-
-><
-    :) text "Hello I am nested in a block"
-    B) text
-    >< 
-        :) text "Hello I am double nested"
-        B) text 
-    <>
+>< 
+    :) hallo 123
+    B) hallo
 <>
 
-B) text
+B) hallo

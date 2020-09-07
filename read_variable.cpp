@@ -44,7 +44,6 @@ bool Variable::testIfVariable(std::string code)
         }
     } 
     
-        
     TypeValue typeValue;
 
     typeValue.identifier = identifier; 
@@ -163,8 +162,12 @@ void Variable::printValue(std::string identifier)
     for (int i{ 0 }; i < m_variables.size(); ++i)
     {
         if (m_variables.at(i).identifier == identifier)
+        {
             std::cout << m_variables.at(i).value << std::endl;
+            return; 
+        }
     } 
+    std::cerr << "Print: identifier not found" << std::endl;
 }
 
 void Variable::setVariable(std::string identifier, std::string value)
@@ -194,4 +197,21 @@ std::string Variable::getValueVar(std::string identifier)
             return m_variables.at(i).value;
     } 
     return "smt went wrong";
+}
+
+void Variable::compareVariable(const Variable &variable)
+{
+    for (int i{ 0 }; i < variable.m_variables.size(); ++i)
+    {
+        for (int j{ 0 }; j < m_variables.size(); ++j)
+        {
+            if (m_variables.at(j).identifier == variable.m_variables.at(i).identifier)
+            {
+                m_variables.at(j).type = variable.m_variables.at(i).type;
+                m_variables.at(j).value = variable.m_variables.at(i).value;
+            } 
+        } 
+
+    } 
+   
 }

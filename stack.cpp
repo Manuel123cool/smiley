@@ -13,6 +13,8 @@ void Stack::addStackFrame()
 
 void Stack::popStackFrame()
 {
+    m_stack.at(m_stack.size() - 2).
+        compareVariable(m_stack.at(m_stack.size() - 1)); 
     m_stack.pop_back();
 }
 

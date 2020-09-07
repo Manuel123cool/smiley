@@ -30,4 +30,5 @@ public:
     std::string getValueVar(std::string identifer);
     void printValue(std::string identifier);
     void setVariable(std::string identifier, std::string value);
+    void compareVariable(const Variable &variable);   
 };

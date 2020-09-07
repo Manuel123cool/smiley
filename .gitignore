@@ -7,3 +7,4 @@ main.o
 read_variable.o
 regex.o
 stack.o
+.regex.cpp.swp
