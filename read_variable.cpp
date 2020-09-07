@@ -9,22 +9,80 @@ bool Variable::testIfVariable(std::string code)
     bool isInString{ MyRegex::testString(code, ":) ") };
     if (!isInString)
         return false;
+
+    if (checkIfValueIsIdentifier(code))
+    {
+        std::string value{ getValue(code) };
+        int count{ 0 };
+        for (const auto &elem : m_variables)
+        {
+            if (value == elem.identifier)
+            {
+                TypeValue typeValue;
+
+                typeValue.identifier = getIdentifier(code); 
+                typeValue.value = m_variables.at(count).value; 
+                typeValue.type = m_variables.at(count).type; 
+                m_variables.push_back(typeValue); 
+                return true;
+            } 
+            ++count;
+        } 
+    }
+
+    std::string identifier{ getIdentifier(code) };
+    std::string value{ getValue(code) };
+    Types type{ getType(code) };
+
+    for (int i{ 0 }; i < m_variables.size(); ++i)
+    {
+        if (m_variables.at(i).identifier == identifier)
+        {
+            m_variables.at(i).value = value; 
+            m_variables.at(i).type = type;
+            return true;
+        }
+    } 
     
+        
     TypeValue typeValue;
 
-    typeValue.identifier = getIdentifier(code); 
-    //std::cout << typeValue.identifier << std::endl;
-   
-      
-    typeValue.value = getValue(code); 
-    //std::cout << typeValue.value << std::endl;
-
-    typeValue.type = getType(code); 
-    //std::cout << typeValue.type << std::endl;
-
-    m_variables.push_back(typeValue); 
+    typeValue.identifier = identifier; 
+    typeValue.value = value; 
+    typeValue.type = type; 
+    m_variables.push_back(typeValue);
     return true;
 } 
+
+bool Variable::checkIfValueIsIdentifier(std::string code)
+{
+    std::string value;
+    bool start{ false };
+    int whiteSpaceCount{ 0 };
+    for(const auto &c : code) 
+    {    
+         if (start)
+            value += c;    
+
+        if (c == ' ')
+             ++whiteSpaceCount;
+
+        if (whiteSpaceCount == 2)
+            start = true;
+        
+    } 
+    if (value.at(0) == '"')
+        return false;
+    
+    char valueChar[value.length() + 1]; 
+    std::strcpy(valueChar, value.c_str());    
+    
+    if (static_cast<int>(valueChar[0]) > 57)
+        return true;
+    
+    return false;
+}
+        
 
 std::string Variable::getIdentifier(std::string code)
 {

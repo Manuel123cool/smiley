@@ -1,0 +1,9 @@
+.hallo.swp
+.main.cpp.swp
+.read_variable.cpp.swp
+.read_variable.h.swp
+.stack.cpp.swp
+main.o
+read_variable.o
+regex.o
+stack.o

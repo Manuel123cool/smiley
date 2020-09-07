@@ -1,10 +1,13 @@
-:) enterValue "PLeace enter value"
-B) enterValue 
-B-) firstValue
+e) text "hallo Welt"
+B) text
 
-B) enterValue
-B-) secondValue
+><
+    :) text "Hello I am nested in a block"
+    B) text
+    >< 
+        :) text "Hello I am double nested"
+        B) text 
+    <>
+<>
 
-:+S firstValue secondValue :( hallo Welt :(
-B) secondValue
-
+B) text

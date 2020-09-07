@@ -5,6 +5,9 @@
 
 bool MyRegex::testString(std::string string, std::string test)
 {
+    if (string.length() < test.length())
+        return false;
+
     bool isInString{ true };
     for (int i{ 0 }; i < test.length(); ++i)
     {
@@ -14,7 +17,7 @@ bool MyRegex::testString(std::string string, std::string test)
     return isInString;
 } 
 
-void MyRegex::testComandPrint(std::string code, Variable &variable)
+void MyRegex::testComandPrint(std::string code, Stack &stack)
 {
     if (code.length() <= 0)
         return;  
@@ -31,7 +34,7 @@ void MyRegex::testComandPrint(std::string code, Variable &variable)
         if (c == ' ' && !start)
             start = true;
     }
-    variable.printValue(identifier);
+    stack().printValue(identifier);
 }
 
 std::string MyRegex::processComments(std::string code)
@@ -107,18 +110,36 @@ std::string MyRegex::deleteInessentialSpaces(std::string code)
         ++count;    
     }
     
-    bool delAtEnd{ false };
-    if (code.at(code.length() - 1) == ' ')
-        delAtEnd = true;
+    { 
+        bool delAtEnd{ false };
+        if (code.at(code.length() - 1) == ' ')
+            delAtEnd = true;
 
-    int count1{ 1 };
-    while (delAtEnd)
+        int count1{ 1 };
+        while (delAtEnd)
+        {
+            if (code.at(code.length() - count1) == ' ') 
+                delNum.push_back(code.length() - count1);
+            else
+                delAtEnd = false;
+            ++count1; 
+        }
+    }
+        
     {
-        if (code.at(code.length() - count1) == ' ') 
-            delNum.push_back(code.length() - count1);
-        else
-            delAtEnd = false;
-        ++count1; 
+        bool delAtStart{ false };
+        if (code.at(0) == ' ')
+            delAtStart = true;
+
+        int count2{ 0 };
+        while (delAtStart)
+        {
+            if (code.at(count2) == ' ') 
+                delNum.push_back(count2);
+            else
+                delAtStart = false;
+            ++count2; 
+        }
     }
 
     std::string codeWithoutSpaces;
@@ -137,7 +158,7 @@ std::string MyRegex::deleteInessentialSpaces(std::string code)
 }
 
 
-void MyRegex::testUserInput(std::string code, Variable &variable)
+void MyRegex::testUserInput(std::string code, Stack &stack)
 {
     if (code.length() <= 0)
         return;  
@@ -158,12 +179,12 @@ void MyRegex::testUserInput(std::string code, Variable &variable)
 
     std::string inputValue;
     std::getline(std::cin, inputValue);
-    variable.setVariable(identifier, inputValue);
+    stack().setVariable(identifier, inputValue);
 }
 
-void MyRegex::testCalculater(std::string code, Variable &variable)
+void MyRegex::testCalculater(std::string code, Stack &stack)
 {
-    if (code.length() == 0)
+    if (code.length() < 3)
         return;
 
     if (!MyRegex::testString(code, ":") && code.at(2) != 'S')
@@ -207,13 +228,13 @@ void MyRegex::testCalculater(std::string code, Variable &variable)
     int secondNum{ 0 }; 
      
     if (identifier1)
-        firstNum = std::stoi(variable.getValueVar(firstValue));
+        firstNum = std::stoi(stack().getValueVar(firstValue));
     else 
         firstNum = std::stoi(firstValue);
 
     if (identifier2)
     {
-        secondNum = std::stoi(variable.getValueVar(secondValue));
+        secondNum = std::stoi(stack().getValueVar(secondValue));
     }
     else 
     {
@@ -238,5 +259,5 @@ void MyRegex::testCalculater(std::string code, Variable &variable)
          default:
             std::cerr << "calculation syntax error";
     }
-    variable.setVariable(secondValue, std::to_string(result)); 
+    stack().setVariable(secondValue, std::to_string(result)); 
 }

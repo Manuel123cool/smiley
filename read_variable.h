@@ -10,7 +10,8 @@ public:
     {
         INT,
         STRING,
-        FLOAT
+        FLOAT,
+        BOOL
     };
 private:
     struct TypeValue
@@ -23,6 +24,7 @@ private:
     std::string getIdentifier(std::string code);
     std::string getValue(std::string code);
     Types getType(std::string code);
+    bool checkIfValueIsIdentifier(std::string code);
 public:
     bool testIfVariable(std::string code);
     std::string getValueVar(std::string identifer);

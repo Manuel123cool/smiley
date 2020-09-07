@@ -3,6 +3,7 @@
 #include <string>
 #include "read_variable.h"
 #include "regex.h"
+#include "stack.h"
 
 int main(int argc, char *argv[])
 {
@@ -20,8 +21,9 @@ int main(int argc, char *argv[])
         return 1;
     }
     
-    Variable variable;
-    
+    Stack stack;
+    stack.addStackFrame();
+  
     while (inf)
     {
         std::string strInput;
@@ -34,13 +36,13 @@ int main(int argc, char *argv[])
         }
         clearedStr = MyRegex::deleteInessentialSpaces(clearedStr);
 
-        if (variable.testIfVariable(clearedStr))        
+        stack.checkBlock(clearedStr);
+        if (stack().testIfVariable(clearedStr))        
             continue;
-        
-        MyRegex::testComandPrint(clearedStr, variable); 
-        MyRegex::testUserInput(clearedStr, variable);
-        MyRegex::testCalculater(clearedStr, variable);
-        
+
+        MyRegex::testComandPrint(clearedStr, stack); 
+        MyRegex::testUserInput(clearedStr, stack);
+        MyRegex::testCalculater(clearedStr, stack);
     } 
     return 0;
 
