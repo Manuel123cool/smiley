@@ -49,7 +49,7 @@ B) text
 ><  :( my own invention of a hugging emoji :( 
 	:) text “Hello World I am nested in a block" 
 	B) text        :( this prints the text right above :( 
-<> :( a twisted hug emoji :( <br>
+<> :( a twisted hug emoji :( 
 
 B) text :(  this will print the first version of text (“Hello World”) :( 
 ```
