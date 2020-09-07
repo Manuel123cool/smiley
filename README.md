@@ -1,3 +1,4 @@
+<pre>
 Smiley 
 
 Smiley is a new Programing language with a complete new syntax construction, that contains smilies for for every statement, this makes the code shorter and cleaner. Also are higher lever function names mixed up with for example simple for loops key words.
@@ -54,3 +55,4 @@ B) text	<br>
 B) text :(  this will print the first version of text (“Hello World”) :( <br>
 
 Because the hugging instruction create its own name space.  <br>
+</pre>
