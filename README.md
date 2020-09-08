@@ -51,3 +51,20 @@ If your program gets more complex, and the identifier could be mix up, in genera
 B) text :(  this will give an error, becouse text is in its own name space :( 
 ```
 Hint: you cant coppy this do to weird formatting.
+
+Arrays in this language have no extra implementation. Do to the fact that every individual identifier can point to a value. So you can just pretend that arrays are implemented. And just write human[0] and reference to this with human[0] again.
+:) human[id] “value”
+B) human[id]
+
+Boolishe types are represented with a b in the smiley emoji. Don’t forget to separate everything with white spaces. 
+:b) identifier value == 1
+:b) identifier 2 < 1
+:b) identifier true
+:b) identifier false
+
+The if statement is unsure where to process you code. So its an unsure emoji, followed by a block.
+:/ boolIdentifier
+><
+	:( some statement : (
+<>
+
