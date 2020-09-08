@@ -11,7 +11,7 @@ namespace MyRegex
     void testComandPrint(std::string code, Stack &stack);
     void testUserInput(std::string code, Stack &stack);
     void testCalculater(std::string, Stack &stack);
-
+    
     std::string processComments(std::string code);
     std::string deleteInessentialSpaces(std::string code); 
 }

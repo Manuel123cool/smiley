@@ -211,9 +211,10 @@ void MyRegex::testCalculater(std::string code, Stack &stack)
     if (code.length() < 3)
         return;
 
-    if (!MyRegex::testString(code, ":") && code.at(2) != 'S')
+    if (!MyRegex::testString(code, ":") || code.at(2) != 'S')
         return;
 
+    std::cout << "in calculator\n";
     std::string firstValue;
     std::string secondValue;
     bool identifier1{ false };
@@ -251,7 +252,6 @@ void MyRegex::testCalculater(std::string code, Stack &stack)
 
     if (identifier1 && stack().getTypeByIdent(firstValue) == Variable::STRING)
     {        
-        std::cout << "Hallo 1" << std::endl;
         stack().setVariable(
                 firstValue, stack().getValueVar(firstValue), Variable::INT); 
         for (const auto &elem : stack().getValueVar(firstValue))
@@ -391,3 +391,4 @@ void MyRegex::testCalculater(std::string code, Stack &stack)
         stack().setVariable(secondValue, std::to_string(result), Variable::FLOAT); 
     }
 }
+

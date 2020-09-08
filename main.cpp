@@ -4,7 +4,7 @@
 #include "read_variable.h"
 #include "regex.h"
 #include "stack.h"
-
+#include "instruction.h"
 int main(int argc, char *argv[])
 {
     if (argc != 2)
@@ -20,10 +20,8 @@ int main(int argc, char *argv[])
         std::cerr << "Uh oh, Sample.dat could not be opened for reading!\n";
         return 1;
     }
-    
-    Stack stack;
-    stack.addStackFrame();
-  
+    Instruction instruction;
+
     while (inf)
     {
         std::string strInput;
@@ -36,15 +34,9 @@ int main(int argc, char *argv[])
         }
         clearedStr = MyRegex::deleteInessentialSpaces(clearedStr);
 
-        stack.checkBlock(clearedStr);
-        if (stack().testIfVariable(clearedStr))        
-            continue;
-
-        MyRegex::testComandPrint(clearedStr, stack); 
-        MyRegex::testUserInput(clearedStr, stack);
-        MyRegex::testCalculater(clearedStr, stack);
+        instruction.add(clearedStr);
     } 
+    instruction.run();
     return 0;
-
 }
 

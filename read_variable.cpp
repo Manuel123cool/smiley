@@ -7,7 +7,7 @@ bool Variable::testIfVariable(std::string code)
         return false;
 
     bool isInString{ MyRegex::testString(code, ":) ") };
-    if (!isInString)
+    if (!isInString) 
         return false;
 
     if (checkIfValueIsIdentifier(code))
@@ -159,7 +159,6 @@ Variable::Types Variable::getType(std::string code)
         if (elem == '.')
             return FLOAT;
     }
-
     
     return INT;
 }
@@ -232,4 +231,376 @@ Variable::Types Variable::getTypeByIdent(std::string identifier)
             return m_variables.at(i).type;
     } 
     return STRING;
+}
+
+void Variable::testIfBoolVar(std::string code)
+{    
+    if (code.length() <= 0)
+        return;
+
+    bool isInString{ MyRegex::testString(code, ":b) ") };
+    if (!isInString) 
+        return;
+
+    std::string identifier{ getIdentifier(code) };
+
+    std::string value1;
+    bool start{ false };
+    int whiteSpaceCount{ 0 };
+    for(const auto &c : code) 
+    {    
+        if (c == ' ')
+             ++whiteSpaceCount;
+
+        if (whiteSpaceCount == 3)
+            break;
+
+        if (start)
+            value1 += c;    
+
+        if (whiteSpaceCount == 2)
+            start = true;
+    } 
+
+    if (value1 == "true" || value1 == "false")
+    {
+        TypeValue typeValue;
+        typeValue.identifier = identifier; 
+        typeValue.type = BOOL; 
+        typeValue.value = value1;
+        m_variables.push_back(typeValue);
+        return;
+    }
+
+    std::string stringValue;
+    bool firstValueIsString{ false };
+    if (value1.at(0) == '"')
+    {
+        firstValueIsString = true;
+        for (int i{ 1 }; i < value1.length() - 1; ++i)
+        {
+           stringValue += value1.at(i); 
+        } 
+        value1 = stringValue;
+    }
+
+    std::string operatorStr;
+    bool start1{ false };
+    int whiteSpaceCount1{ 0 };
+    for(const auto &c : code) 
+    {    
+        if (c == ' ')
+             ++whiteSpaceCount1;
+
+        if (whiteSpaceCount1 == 4)
+            break;
+
+        if (start1)
+            operatorStr += c;    
+
+        if (whiteSpaceCount1 == 3)
+            start1 = true;
+    } 
+
+    std::string value2;
+    bool start2{ false };
+    int whiteSpaceCount2{ 0 };
+    for(const auto &c : code) 
+    {    
+        if (c == ' ')
+             ++whiteSpaceCount2;
+
+        if (start2)
+            value2 += c;    
+
+        if (whiteSpaceCount2 == 4)
+            start2 = true;
+    } 
+    std::string stringValue2;
+    bool secondValueIsString{ false };
+    if (value2.at(0) == '"')
+    {
+        secondValueIsString = true;
+        for (int i{ 1 }; i < value2.length() - 1; ++i)
+        {
+           stringValue += value2.at(i); 
+        } 
+        value2 = stringValue;
+    }
+
+    char firstChar[value1.length() + 1];
+    char secondChar[value2.length() + 1];
+
+    std::strcpy(firstChar, value1.c_str());    
+    std::strcpy(secondChar, value2.c_str());    
+    
+    bool firstIsNum{ false };
+    bool secondIsNum{ false };
+
+    if (static_cast<int>(firstChar[0]) <= 57)
+        firstIsNum = true;
+         
+    if (static_cast<int>(secondChar[0]) <= 57)
+        secondIsNum = true;
+ 
+    std::cout << identifier << " " << value1 << " " << operatorStr << " "  << value2 << std::endl;
+    TypeValue typeValue;
+    typeValue.identifier = identifier; 
+    typeValue.type = BOOL; 
+
+    float number1{ 0 };
+    float number2{ 0 };
+
+    if (firstIsNum)
+        number1 = std::stof(value1);
+    
+    if (secondIsNum)
+        number2 = std::stof(value2);
+    
+    if (getTypeByIdent(value1) == FLOAT) 
+    {
+        number1 = std::stof(getValueVar(value1));
+        firstIsNum = true;
+    }
+
+    if (getTypeByIdent(value2) == FLOAT) 
+    {
+        number2 = std::stof(getValueVar(value2));
+        secondIsNum = true;
+    }
+
+    if (operatorStr == "==")
+    {
+        if (firstIsNum && secondIsNum)
+        {
+            if (number1 == number2)
+            {
+                typeValue.value = "true"; 
+                m_variables.push_back(typeValue); 
+                return;
+            }                      
+            else
+            {
+                typeValue.value = "false";
+                m_variables.push_back(typeValue); 
+                return;
+            }            
+        }
+        if (getTypeByIdent(value1) == INT || getTypeByIdent(value2) == INT) 
+        {
+            int numberInt1;
+            int numberInt2;
+            if (getTypeByIdent(value1) == INT && getTypeByIdent(value2) == INT) 
+            {
+                numberInt1 = std::stoi(getValueVar(value1));
+                numberInt2 = std::stoi(getValueVar(value2));
+            }
+            else if (getTypeByIdent(value1) == INT)
+            {
+                numberInt1 = std::stoi(getValueVar(value1));
+                numberInt2 = static_cast<int>(number2);
+            }
+            else if (getTypeByIdent(value2) == INT)
+            {
+                numberInt2 = static_cast<int>(number1);
+                numberInt2 = std::stoi(getValueVar(value2));
+            }
+            if (numberInt1 == numberInt2)
+            {
+                typeValue.value = "true"; 
+                m_variables.push_back(typeValue); 
+                return;
+            }                      
+            else
+            {
+                typeValue.value = "false";
+                m_variables.push_back(typeValue); 
+                return;
+            }            
+        } 
+        if (getTypeByIdent(value1) == STRING && getTypeByIdent(value2) == STRING)
+        {
+            if (getValueVar(value1) == getValueVar(value2))
+            {
+                typeValue.value = "true"; 
+                m_variables.push_back(typeValue); 
+                return;
+            }                      
+            else
+            {
+                typeValue.value = "false";
+                m_variables.push_back(typeValue); 
+                return;
+            }            
+        } 
+    }
+
+    if (operatorStr == "!=")
+    {
+        if (firstIsNum && secondIsNum)
+        {
+            if (number1 != number2)
+            {
+                typeValue.value = "true"; 
+                m_variables.push_back(typeValue); 
+                return;
+            }                      
+            else
+            {
+                typeValue.value = "false";
+                m_variables.push_back(typeValue); 
+                return;
+            }            
+        }
+        if (getTypeByIdent(value1) == INT || getTypeByIdent(value2) == INT) 
+        {
+            int numberInt1;
+            int numberInt2;
+            if (getTypeByIdent(value1) == INT && getTypeByIdent(value2) == INT) 
+            {
+                numberInt1 = std::stoi(getValueVar(value1));
+                numberInt2 = std::stoi(getValueVar(value2));
+            }
+            else if (getTypeByIdent(value1) == INT)
+            {
+                numberInt1 = std::stoi(getValueVar(value1));
+                numberInt2 = static_cast<int>(number2);
+            }
+            else if (getTypeByIdent(value2) == INT)
+            {
+                numberInt2 = static_cast<int>(number1);
+                numberInt2 = std::stoi(getValueVar(value2));
+            }
+            if (numberInt1 != numberInt2)
+            {
+                typeValue.value = "true"; 
+                m_variables.push_back(typeValue); 
+                return;
+            }                      
+            else
+            {
+                typeValue.value = "false";
+                m_variables.push_back(typeValue); 
+                return;
+            }            
+        } 
+        if (getTypeByIdent(value1) == STRING && getTypeByIdent(value2) == STRING)
+        {
+            if (getValueVar(value1) != getValueVar(value2))
+            {
+                typeValue.value = "true"; 
+                m_variables.push_back(typeValue); 
+                return;
+            }                      
+            else
+            {
+                typeValue.value = "false";
+                m_variables.push_back(typeValue); 
+                return;
+            }            
+        } 
+    }
+
+    if (operatorStr == "<")
+    {
+        if (firstIsNum && secondIsNum)
+        {
+            if (number1 < number2)
+            {
+                typeValue.value = "true"; 
+                m_variables.push_back(typeValue); 
+                return;
+            }                      
+            else
+            {
+                typeValue.value = "false";
+                m_variables.push_back(typeValue); 
+                return;
+            }            
+        }
+        if (getTypeByIdent(value1) == INT || getTypeByIdent(value2) == INT) 
+        {
+            int numberInt1;
+            int numberInt2;
+            if (getTypeByIdent(value1) == INT && getTypeByIdent(value2) == INT) 
+            {
+                numberInt1 = std::stoi(getValueVar(value1));
+                numberInt2 = std::stoi(getValueVar(value2));
+            }
+            else if (getTypeByIdent(value1) == INT)
+            {
+                numberInt1 = std::stoi(getValueVar(value1));
+                numberInt2 = static_cast<int>(number2);
+            }
+            else if (getTypeByIdent(value2) == INT)
+            {
+                numberInt2 = static_cast<int>(number1);
+                numberInt2 = std::stoi(getValueVar(value2));
+            }
+            if (numberInt1 < numberInt2)
+            {
+                typeValue.value = "true"; 
+                m_variables.push_back(typeValue); 
+                return;
+            }                      
+            else
+            {
+                typeValue.value = "false";
+                m_variables.push_back(typeValue); 
+                return;
+            }            
+        } 
+    }
+
+    if (operatorStr == ">")
+    {
+        if (firstIsNum && secondIsNum)
+        {
+            if (number1 > number2)
+            {
+                typeValue.value = "true"; 
+                m_variables.push_back(typeValue); 
+                return;
+            }                      
+            else
+            {
+                typeValue.value = "false";
+                m_variables.push_back(typeValue); 
+                return;
+            }            
+        }
+        if (getTypeByIdent(value1) == INT || getTypeByIdent(value2) == INT) 
+        {
+            int numberInt1;
+            int numberInt2;
+            if (getTypeByIdent(value1) == INT && getTypeByIdent(value2) == INT) 
+            {
+                numberInt1 = std::stoi(getValueVar(value1));
+                numberInt2 = std::stoi(getValueVar(value2));
+            }
+            else if (getTypeByIdent(value1) == INT)
+            {
+                numberInt1 = std::stoi(getValueVar(value1));
+                numberInt2 = static_cast<int>(number2);
+            }
+            else if (getTypeByIdent(value2) == INT)
+            {
+                numberInt2 = static_cast<int>(number1);
+                numberInt2 = std::stoi(getValueVar(value2));
+            }
+            if (numberInt1 > numberInt2)
+            {
+                typeValue.value = "true"; 
+                m_variables.push_back(typeValue); 
+                return;
+            }                      
+            else
+            {
+                typeValue.value = "false";
+                m_variables.push_back(typeValue); 
+                return;
+            }            
+        } 
+    }
+    std::cerr << "Bool: syntax or whatever mistake" << std::endl;
 }
