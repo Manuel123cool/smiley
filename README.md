@@ -16,7 +16,7 @@ Comments are something we feel bad about, nobody like it to be ignored, it is ma
 
 :( this text is ignored :(
 
-Variable declaration is simply  positive, so the emoji too. It starts with a smiley then the identifier and ends with with the value of the variable. And no one cares about if you type is integer ore what ever, this language is not type save. The identifier can be anything, it just must start and end with a  white space, in it shouldn't be white spaces.
+Variable declaration is simply  positive, so the emoji too. It starts with a smiley then the identifier and ends with with the value of the variable. And no one cares about if you type is integer ore what ever, this language is not type save. The identifier can be anything, it just must start and end with a  white space, in it shouldn't be white spaces. The variable shouldn't start with a number.
 
 :) someInteger 123 <br>
 :) string “hallo”
@@ -28,7 +28,7 @@ There is nothing cooler then showing what you got. Printing something is boss li
 :) someValue “Hallo Welt” <br>
 B) someIdentifier
 
-To get user input is kind of cool too. Just do the extended cool emoji then a identifier to store and     
+To get user input is kind of cool too. Just do the extended cool emoji then a identifier to store and
 to get the value.
 
 B-) someIdentifier
@@ -51,5 +51,3 @@ If your program gets more complex, and the identifier could be mix up, in genera
 B) text :(  this will give an error, becouse text is in its own name space :( 
 ```
 Hint: you cant coppy this do to weird formatting.
-
-Because the hugging instruction create its own name space.  <br>

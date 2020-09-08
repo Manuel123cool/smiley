@@ -26,9 +26,10 @@ private:
     Types getType(std::string code);
     bool checkIfValueIsIdentifier(std::string code);
 public:
+    Types getTypeByIdent(std::string ident);
     bool testIfVariable(std::string code);
     std::string getValueVar(std::string identifer);
     void printValue(std::string identifier);
-    void setVariable(std::string identifier, std::string value);
+    void setVariable(std::string identifier, std::string value, Types type);
     void compareVariable(const Variable &variable);   
 };

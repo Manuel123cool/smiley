@@ -153,7 +153,14 @@ Variable::Types Variable::getType(std::string code)
     {
         return STRING;
     }
-     
+
+    for (const auto &elem : value)
+    {
+        if (elem == '.')
+            return FLOAT;
+    }
+
+    
     return INT;
 }
 
@@ -170,13 +177,14 @@ void Variable::printValue(std::string identifier)
     std::cerr << "Print: identifier not found" << std::endl;
 }
 
-void Variable::setVariable(std::string identifier, std::string value)
+void Variable::setVariable(std::string identifier, std::string value, Types type)
 {
     for (int i{ 0 }; i < m_variables.size(); ++i)
     {
         if (m_variables.at(i).identifier == identifier)
         {
             m_variables.at(i).value = value; 
+            m_variables.at(i).type = type; 
             return;
         }
     } 
@@ -184,7 +192,7 @@ void Variable::setVariable(std::string identifier, std::string value)
     TypeValue typeValue; 
     typeValue.identifier = identifier;
     typeValue.value = value;
-    typeValue.type = STRING; 
+    typeValue.type = type; 
     
     m_variables.push_back(typeValue);
 }
@@ -214,4 +222,14 @@ void Variable::compareVariable(const Variable &variable)
 
     } 
    
+}
+
+Variable::Types Variable::getTypeByIdent(std::string identifier)
+{
+    for (int i{ 0 }; i < m_variables.size(); ++i)
+    {
+        if (m_variables.at(i).identifier == identifier)
+            return m_variables.at(i).type;
+    } 
+    return STRING;
 }

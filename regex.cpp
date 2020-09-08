@@ -24,18 +24,41 @@ void MyRegex::testComandPrint(std::string code, Stack &stack)
 
     if (!MyRegex::testString(code, "B) "))
         return;
-    std::string identifier;
+    std::string value;
     bool start{ false };
     for(const auto &c : code)
     {
         if (start)
         {
-            identifier += c;
+            value += c;
         } 
         if (c == ' ' && !start)
             start = true;
     }
-    stack().printValue(identifier);
+    if (value.at(0) == '"')
+    {
+        std::string printValue;
+        int count{ -1 };
+        for(const auto &c : value)
+        {
+            ++count;
+            if (count == 0)
+                continue;
+            if (count == value.length() - 1)
+                break;
+            printValue += c; 
+        }
+        std::cout << printValue << std::endl; 
+        return;
+    }
+    char testNum[value.length() + 1];
+    std::strcpy(testNum, value.c_str());    
+    if (static_cast<int>(testNum[0]) <= 57)
+    {
+        std::cout << value << std::endl; 
+        return;
+    }
+    stack().printValue(value);
 }
 
 std::string MyRegex::processComments(std::string code)
@@ -180,7 +203,7 @@ void MyRegex::testUserInput(std::string code, Stack &stack)
 
     std::string inputValue;
     std::getline(std::cin, inputValue);
-    stack().setVariable(identifier, inputValue);
+    stack().setVariable(identifier, inputValue, Variable::STRING);
 }
 
 void MyRegex::testCalculater(std::string code, Stack &stack)
@@ -213,6 +236,7 @@ void MyRegex::testCalculater(std::string code, Stack &stack)
             firstStart = true; 
     } 
     
+
     char firstChar[firstValue.length() + 1]; 
     char secondChar[secondValue.length() + 1]; 
         
@@ -224,41 +248,146 @@ void MyRegex::testCalculater(std::string code, Stack &stack)
                 
     if (static_cast<int>(secondChar[0]) > 57)
         identifier2 = true;
-    
+
+    if (identifier1 && stack().getTypeByIdent(firstValue) == Variable::STRING)
+    {        
+        std::cout << "Hallo 1" << std::endl;
+        stack().setVariable(
+                firstValue, stack().getValueVar(firstValue), Variable::INT); 
+        for (const auto &elem : stack().getValueVar(firstValue))
+        {
+            if (elem == '.')
+            {
+                stack().setVariable(
+                    firstValue, stack().getValueVar(firstValue), Variable::FLOAT); 
+                break;
+            } 
+        }
+    }
+    if (identifier2 && stack().getTypeByIdent(secondValue) == Variable::STRING)
+    {        
+        
+        stack().setVariable(
+                secondValue, stack().getValueVar(secondValue), Variable::INT); 
+        for (const auto &elem : stack().getValueVar(secondValue))
+        {
+            if (elem == '.')
+            {
+                stack().setVariable(
+                    secondValue, stack().getValueVar(secondValue), Variable::FLOAT); 
+                break;
+            } 
+        }
+    }
+
     int firstNum{ 0 };
     int secondNum{ 0 }; 
      
-    if (identifier1)
-        firstNum = std::stoi(stack().getValueVar(firstValue));
+    float firstFloat{ 0.0f };
+    float secondFloat{ 0.0f }; 
+    
+    bool isInt1{ true };
+
+    if (!identifier1)
+    {
+        for (const auto &elem : firstValue)
+        {
+            if (elem == '.')
+                isInt1 = false;
+        }
+    }
     else 
-        firstNum = std::stoi(firstValue);
+    {
+        if (stack().getTypeByIdent(firstValue) == Variable::FLOAT)
+            isInt1 = false;
+    }
+
+    if (isInt1)
+    {
+        if (identifier1)
+            firstNum = std::stoi(stack().getValueVar(firstValue));
+        else 
+            firstNum = std::stoi(firstValue);
+    }
+    else
+    {
+        if (identifier1)
+            firstFloat = std::stof(stack().getValueVar(firstValue));
+        else 
+            firstFloat = std::stof(firstValue);
+    } 
 
     if (identifier2)
     {
-        secondNum = std::stoi(stack().getValueVar(secondValue));
+        if (stack().getTypeByIdent(secondValue) == Variable::FLOAT)
+            secondFloat = std::stof(stack().getValueVar(secondValue));
+        else
+            secondNum = std::stoi(stack().getValueVar(secondValue));
     }
     else 
     {
         std::cerr << "Error calculating: second value should be a identifier";
         return;
     } 
-    int result{ 0 }; 
-    switch (code.at(1))
+
+    if (stack().getTypeByIdent(secondValue) == 2)
     {
-        case '+':
-            result = firstNum + secondNum;
-            break;
-        case '*':
-            result = firstNum * secondNum;
-            break;
-         case '-':
-            result = firstNum - secondNum;
-            break;
-         case '/':
-            result = firstNum / secondNum;
-            break;
-         default:
-            std::cerr << "calculation syntax error";
+        if (isInt1)
+        {
+            std::cerr << "Types are not the same\n"; 
+            return;
+        }
     }
-    stack().setVariable(secondValue, std::to_string(result)); 
+    if (!isInt1)
+    {
+        if (stack().getTypeByIdent(secondValue) == 0)
+        {
+            std::cerr << "Types are not the same\n"; 
+            return;
+        }
+    }
+    if (isInt1)
+    { 
+        int result{ 0 }; 
+        switch (code.at(1))
+        {
+            case '+':
+                result = firstNum + secondNum;
+                break;
+            case '*':
+                result = firstNum * secondNum;
+                break;
+             case '-':
+                result = firstNum - secondNum;
+                break;
+             case '/':
+                result = firstNum / secondNum;
+                break;
+             default:
+                std::cerr << "calculation syntax error";
+        }
+        stack().setVariable(secondValue, std::to_string(result), Variable::INT); 
+    }
+    else 
+    {
+        float result{ 0.0f }; 
+        switch (code.at(1))
+        {
+            case '+':
+                result = firstFloat + secondFloat;
+                break;
+            case '*':
+                result = firstFloat * secondFloat;
+                break;
+             case '-':
+                result = firstFloat - secondFloat;
+                break;
+             case '/':
+                result = firstFloat / secondFloat;
+                break;
+             default:
+                std::cerr << "calculation syntax error";
+        }
+        stack().setVariable(secondValue, std::to_string(result), Variable::FLOAT); 
+    }
 }

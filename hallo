@@ -1,6 +1,3 @@
->< 
-    :) hallo 123
-    B) hallo
-<>
-
-B) hallo
+:) hallo "Hallo Welt"
+:) hallo1 hallo
+B) hallo1 
