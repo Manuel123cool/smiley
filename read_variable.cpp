@@ -337,13 +337,12 @@ void Variable::testIfBoolVar(std::string code)
     bool firstIsNum{ false };
     bool secondIsNum{ false };
 
-    if (static_cast<int>(firstChar[0]) <= 57)
+    if (static_cast<int>(firstChar[0]) <= 57 && static_cast<int>(firstChar[0]) >= 48)
         firstIsNum = true;
          
-    if (static_cast<int>(secondChar[0]) <= 57)
+    if (static_cast<int>(secondChar[0]) <= 57 && static_cast<int>(secondChar[0]) >= 48)
         secondIsNum = true;
  
-    std::cout << identifier << " " << value1 << " " << operatorStr << " "  << value2 << std::endl;
     TypeValue typeValue;
     typeValue.identifier = identifier; 
     typeValue.type = BOOL; 
@@ -418,9 +417,22 @@ void Variable::testIfBoolVar(std::string code)
                 return;
             }            
         } 
-        if (getTypeByIdent(value1) == STRING && getTypeByIdent(value2) == STRING)
+        if (getTypeByIdent(value1) == STRING || getTypeByIdent(value2) == STRING)
         {
-            if (getValueVar(value1) == getValueVar(value2))
+            std::string firstString;
+            std::string secondString;
+
+            if (firstValueIsString)
+                firstString = value1;
+            else
+                firstString = getValueVar(value1); 
+
+            if (secondValueIsString)
+                secondString = value2;
+            else
+                secondString = getValueVar(value2); 
+ 
+            if (firstString == secondString)
             {
                 typeValue.value = "true"; 
                 m_variables.push_back(typeValue); 
@@ -484,9 +496,22 @@ void Variable::testIfBoolVar(std::string code)
                 return;
             }            
         } 
-        if (getTypeByIdent(value1) == STRING && getTypeByIdent(value2) == STRING)
+        if (getTypeByIdent(value1) == STRING || getTypeByIdent(value2) == STRING)
         {
-            if (getValueVar(value1) != getValueVar(value2))
+            std::string firstString;
+            std::string secondString;
+
+            if (firstValueIsString)
+                firstString = value1;
+            else
+                firstString = getValueVar(value1); 
+
+            if (secondValueIsString)
+                secondString = value2;
+            else
+                secondString = getValueVar(value2); 
+ 
+            if (firstString != secondString)
             {
                 typeValue.value = "true"; 
                 m_variables.push_back(typeValue); 
@@ -499,6 +524,7 @@ void Variable::testIfBoolVar(std::string code)
                 return;
             }            
         } 
+ 
     }
 
     if (operatorStr == "<")
@@ -604,3 +630,4 @@ void Variable::testIfBoolVar(std::string code)
     }
     std::cerr << "Bool: syntax or whatever mistake" << std::endl;
 }
+

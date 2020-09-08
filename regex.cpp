@@ -53,7 +53,7 @@ void MyRegex::testComandPrint(std::string code, Stack &stack)
     }
     char testNum[value.length() + 1];
     std::strcpy(testNum, value.c_str());    
-    if (static_cast<int>(testNum[0]) <= 57)
+    if (static_cast<int>(testNum[0]) <= 57 && static_cast<int>(testNum[0]) >= 48)
     {
         std::cout << value << std::endl; 
         return;
@@ -244,10 +244,10 @@ void MyRegex::testCalculater(std::string code, Stack &stack)
     std::strcpy(firstChar, firstValue.c_str());    
     std::strcpy(secondChar, secondValue.c_str());    
     
-    if (static_cast<int>(firstChar[0]) > 57)
+    if (static_cast<int>(firstChar[0]) > 57 && static_cast<int>(firstChar[0]) >= 48)
         identifier1 = true;
                 
-    if (static_cast<int>(secondChar[0]) > 57)
+    if (static_cast<int>(secondChar[0]) > 57 && static_cast<int>(secondChar[0]) >= 48) 
         identifier2 = true;
 
     if (identifier1 && stack().getTypeByIdent(firstValue) == Variable::STRING)

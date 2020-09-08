@@ -1,2 +1,41 @@
-:b) penis true 
-B) penis
+B) "Enter an operator: +, *, -, /"
+B-) penis
+
+:b) plus penis == "+"
+:b) minus penis == "-"
+:b) mult penis == "*"
+:b) div penis == "/"
+
+B) "Enter first value:"
+B-) firstValue
+
+B) "Enter second value:"
+B-) secondValue
+
+:/ plus
+><
+    :) result secondValue
+    :+S firstValue result
+    B) result
+<>
+
+:/ minus
+><
+    :) result secondValue
+    :-S firstValue result
+    B) result
+<>
+
+:/ mult
+><
+    :) result secondValue
+    :*S firstValue result
+    B) result
+<>
+
+:/ div
+><
+    :) result secondValue
+    :/S firstValue result
+    B) result
+<>

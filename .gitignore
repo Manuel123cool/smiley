@@ -8,3 +8,7 @@ read_variable.o
 regex.o
 stack.o
 .regex.cpp.swp
+.instruction.cpp.swp
+.instruction.h.swp
+.regex.h.swp
+instruction.o
