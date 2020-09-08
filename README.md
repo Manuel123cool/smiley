@@ -65,9 +65,9 @@ Boolishe types are represented with a b in the smiley emoji. Don’t forget to s
 :b) identifier false
 ```
 The if statement is unsure where to process you code. So its an unsure emoji, followed by a block.
-``
+```
 :/ boolIdentifier
 ><
 	:( some statement : (
 <>
-``
+```
