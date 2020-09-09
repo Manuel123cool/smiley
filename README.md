@@ -85,7 +85,7 @@ The loop will gos on as the bool identifier stays true.
 Functions are useful when you have the same code on multiple spots.  The declaration of an function starts with a big grin, then the identifier. Then the code in a block
 ```
 :D identifier
- ><
+><
 	:( Some code :(
 <>
 ```
