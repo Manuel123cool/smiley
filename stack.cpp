@@ -37,3 +37,4 @@ void Stack::checkBlock(std::string code)
     if (blockEnd)
        popStackFrame(); 
 }
+

@@ -203,6 +203,7 @@ std::string Variable::getValueVar(std::string identifier)
         if (m_variables.at(i).identifier == identifier)
             return m_variables.at(i).value;
     } 
+    std::cout << "Get value: identifier not found\n";
     return "smt went wrong";
 }
 
@@ -268,7 +269,7 @@ void Variable::testIfBoolVar(std::string code)
         typeValue.identifier = identifier; 
         typeValue.type = BOOL; 
         typeValue.value = value1;
-        m_variables.push_back(typeValue);
+        setVariable(typeValue.identifier, typeValue.value, typeValue.type);
         return;
     }
 
@@ -375,13 +376,13 @@ void Variable::testIfBoolVar(std::string code)
             if (number1 == number2)
             {
                 typeValue.value = "true"; 
-                m_variables.push_back(typeValue); 
+                setVariable(typeValue.identifier, typeValue.value, typeValue.type);
                 return;
             }                      
             else
             {
                 typeValue.value = "false";
-                m_variables.push_back(typeValue); 
+                setVariable(typeValue.identifier, typeValue.value, typeValue.type);
                 return;
             }            
         }
@@ -407,13 +408,13 @@ void Variable::testIfBoolVar(std::string code)
             if (numberInt1 == numberInt2)
             {
                 typeValue.value = "true"; 
-                m_variables.push_back(typeValue); 
+                setVariable(typeValue.identifier, typeValue.value, typeValue.type);
                 return;
             }                      
             else
             {
                 typeValue.value = "false";
-                m_variables.push_back(typeValue); 
+                setVariable(typeValue.identifier, typeValue.value, typeValue.type);
                 return;
             }            
         } 
@@ -435,13 +436,13 @@ void Variable::testIfBoolVar(std::string code)
             if (firstString == secondString)
             {
                 typeValue.value = "true"; 
-                m_variables.push_back(typeValue); 
+                setVariable(typeValue.identifier, typeValue.value, typeValue.type);
                 return;
             }                      
             else
             {
                 typeValue.value = "false";
-                m_variables.push_back(typeValue); 
+                setVariable(typeValue.identifier, typeValue.value, typeValue.type);
                 return;
             }            
         } 
@@ -454,13 +455,13 @@ void Variable::testIfBoolVar(std::string code)
             if (number1 != number2)
             {
                 typeValue.value = "true"; 
-                m_variables.push_back(typeValue); 
+                setVariable(typeValue.identifier, typeValue.value, typeValue.type);
                 return;
             }                      
             else
             {
                 typeValue.value = "false";
-                m_variables.push_back(typeValue); 
+                setVariable(typeValue.identifier, typeValue.value, typeValue.type);
                 return;
             }            
         }
@@ -486,13 +487,13 @@ void Variable::testIfBoolVar(std::string code)
             if (numberInt1 != numberInt2)
             {
                 typeValue.value = "true"; 
-                m_variables.push_back(typeValue); 
+                setVariable(typeValue.identifier, typeValue.value, typeValue.type);
                 return;
             }                      
             else
             {
                 typeValue.value = "false";
-                m_variables.push_back(typeValue); 
+                setVariable(typeValue.identifier, typeValue.value, typeValue.type);
                 return;
             }            
         } 
@@ -514,13 +515,13 @@ void Variable::testIfBoolVar(std::string code)
             if (firstString != secondString)
             {
                 typeValue.value = "true"; 
-                m_variables.push_back(typeValue); 
+                setVariable(typeValue.identifier, typeValue.value, typeValue.type);
                 return;
             }                      
             else
             {
                 typeValue.value = "false";
-                m_variables.push_back(typeValue); 
+                setVariable(typeValue.identifier, typeValue.value, typeValue.type);
                 return;
             }            
         } 
@@ -534,13 +535,13 @@ void Variable::testIfBoolVar(std::string code)
             if (number1 < number2)
             {
                 typeValue.value = "true"; 
-                m_variables.push_back(typeValue); 
+                setVariable(typeValue.identifier, typeValue.value, typeValue.type);
                 return;
             }                      
             else
             {
                 typeValue.value = "false";
-                m_variables.push_back(typeValue); 
+                setVariable(typeValue.identifier, typeValue.value, typeValue.type);
                 return;
             }            
         }
@@ -566,13 +567,13 @@ void Variable::testIfBoolVar(std::string code)
             if (numberInt1 < numberInt2)
             {
                 typeValue.value = "true"; 
-                m_variables.push_back(typeValue); 
+                setVariable(typeValue.identifier, typeValue.value, typeValue.type);
                 return;
             }                      
             else
             {
                 typeValue.value = "false";
-                m_variables.push_back(typeValue); 
+                setVariable(typeValue.identifier, typeValue.value, typeValue.type);
                 return;
             }            
         } 
@@ -585,13 +586,13 @@ void Variable::testIfBoolVar(std::string code)
             if (number1 > number2)
             {
                 typeValue.value = "true"; 
-                m_variables.push_back(typeValue); 
+                setVariable(typeValue.identifier, typeValue.value, typeValue.type);
                 return;
             }                      
             else
             {
                 typeValue.value = "false";
-                m_variables.push_back(typeValue); 
+                setVariable(typeValue.identifier, typeValue.value, typeValue.type);
                 return;
             }            
         }
@@ -617,13 +618,13 @@ void Variable::testIfBoolVar(std::string code)
             if (numberInt1 > numberInt2)
             {
                 typeValue.value = "true"; 
-                m_variables.push_back(typeValue); 
+                setVariable(typeValue.identifier, typeValue.value, typeValue.type);
                 return;
             }                      
             else
             {
                 typeValue.value = "false";
-                m_variables.push_back(typeValue); 
+                setVariable(typeValue.identifier, typeValue.value, typeValue.type);
                 return;
             }            
         } 

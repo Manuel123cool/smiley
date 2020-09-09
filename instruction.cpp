@@ -2,6 +2,7 @@
 #include "read_variable.h"
 #include "regex.h"
 #include "stack.h"
+#include <stdexcept>
 
 void Instruction::add(std::string instruction)
 {
@@ -16,8 +17,15 @@ void Instruction::run()
     for (int i{ 0 }; i < m_instructions.size(); ++i)  
     {
         std::string code{ m_instructions.at(i) };
+        std::cout << code << std::endl;
+        int jumpNum{ checkJumps(i) };
+        if (jumpNum != -1)
+            i = jumpNum; 
+
         if (checkIf(i, stack) != -1)
             i = checkIf(i, stack); 
+        if (checkLoop(i, stack) != -1)
+            i = checkLoop(i, stack); 
 
         stack.checkBlock(code);
         if (stack().testIfVariable(code))        
@@ -53,18 +61,115 @@ int Instruction::checkIf(int whichInstr, Stack &stack)
             start = true;
     }     
     std::string value{ stack().getValueVar(identifier) };
-    
+
     if (value == "true")
     {
         return whichInstr;
     }
     else 
     {
+        int countBlockStarts{ 0 };
         for (int i{ whichInstr }; i < m_instructions.size(); ++i)  
         {
             std::string code{ m_instructions.at(i) };
+
+            if (MyRegex::testString(code, "><"))
+                ++countBlockStarts;
+
             if (MyRegex::testString(code, "<>"))
+                --countBlockStarts;
+
+            if (MyRegex::testString(code, "<>") && countBlockStarts == 0)
                 return i;
+            
         }
     }
+    return -1;
+}
+
+
+int Instruction::checkLoop(int whichInstr, Stack &stack)
+{
+    std::string code{ m_instructions.at(whichInstr) };
+    if (code.length() <= 0)
+        return -1;
+
+    if (!MyRegex::testString(code, "<* "))
+        return -1;
+    
+    std::string identifier;
+    bool start{ false };
+    for(const auto &c : code) 
+    {
+        if (c == ' ' && start)
+            break; 
+
+        if (start)
+            identifier += c;
+
+        if (c == ' ' && !start)
+            start = true;
+    }     
+    std::string value{ stack().getValueVar(identifier) };
+
+    if (value == "true")
+    {
+        int countBlockStarts{ 0 };
+        for (int i{ whichInstr }; i < m_instructions.size(); ++i)  
+        {
+            std::string code{ m_instructions.at(i) };
+
+            if (MyRegex::testString(code, "><"))
+                ++countBlockStarts;
+
+            if (MyRegex::testString(code, "<>"))
+                --countBlockStarts;
+
+            if (MyRegex::testString(code, "<>") && countBlockStarts == 0)
+            {
+                Jump jump;
+                jump.start = i;
+                jump.jumpTo = whichInstr;
+                m_jumps.push_back(jump); 
+            }
+        }       
+    }
+    else 
+    {
+        int countBlockStarts{ 0 };
+        for (int i{ whichInstr }; i < m_instructions.size(); ++i)  
+        {
+            std::string code{ m_instructions.at(i) };
+
+            if (MyRegex::testString(code, "><"))
+                ++countBlockStarts;
+
+            if (MyRegex::testString(code, "<>"))
+                --countBlockStarts;
+
+            if (MyRegex::testString(code, "<>") && countBlockStarts == 0)
+                return i;
+        } 
+    }
+    return -1;
+}
+
+
+int Instruction::checkJumps(int num)
+{
+    for (int i{ 0 }; i < m_jumps.size(); ++i)
+    {
+        int startNum = m_jumps.at(i).start;
+        if (startNum == num)
+        {
+            int jumpTo{ m_jumps.at(i).jumpTo };
+            for (int j{ 0 }; j < m_jumps.size(); ++j)
+            {
+                if (m_jumps.at(j).start == startNum && m_jumps.at(j).jumpTo == jumpTo)
+                    m_jumps.erase(m_jumps.begin() + j);
+            }
+            return jumpTo;
+        }
+    }
+    return -1;
 }

@@ -118,6 +118,15 @@ std::string MyRegex::deleteInessentialSpaces(std::string code)
     if (code.length() == 0)
         return code;
 
+    bool allWhiteSpaces{ true };
+    for(const auto &c : code)
+    {
+        if (c != ' ')
+            allWhiteSpaces = false;
+    }
+    if (allWhiteSpaces)
+        return "";
+
     std::vector<int> delNum;
     bool startDel{ false };
     int count{ 0 };
@@ -133,7 +142,7 @@ std::string MyRegex::deleteInessentialSpaces(std::string code)
             startDel = false;
         ++count;    
     }
-    
+
     { 
         bool delAtEnd{ false };
         if (code.at(code.length() - 1) == ' ')
@@ -146,7 +155,7 @@ std::string MyRegex::deleteInessentialSpaces(std::string code)
                 delNum.push_back(code.length() - count1);
             else
                 delAtEnd = false;
-            ++count1; 
+            ++count1;
         }
     }
         
@@ -165,7 +174,6 @@ std::string MyRegex::deleteInessentialSpaces(std::string code)
             ++count2; 
         }
     }
-
     std::string codeWithoutSpaces;
     for (int i{ 0 }; i < code.length(); ++i)
     {
@@ -214,7 +222,6 @@ void MyRegex::testCalculater(std::string code, Stack &stack)
     if (!MyRegex::testString(code, ":") || code.at(2) != 'S')
         return;
 
-    std::cout << "in calculator\n";
     std::string firstValue;
     std::string secondValue;
     bool identifier1{ false };

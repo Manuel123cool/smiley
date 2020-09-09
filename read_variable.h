@@ -25,11 +25,9 @@ private:
         Types type;
         std::string value;    
         std::string identifier;
-        int id;
     };
  
     std::vector<TypeValue> m_variables;  
-    std::vector<ArrayValue> m_arrays;
     std::string getIdentifier(std::string code);
     std::string getValue(std::string code);
     Types getType(std::string code);
