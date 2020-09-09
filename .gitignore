@@ -12,3 +12,4 @@ stack.o
 .instruction.h.swp
 .regex.h.swp
 instruction.o
+.stack.h.swp

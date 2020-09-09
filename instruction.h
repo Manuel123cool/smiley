@@ -14,6 +14,7 @@ class Instruction
     int checkIf(int whichInstr, Stack &stack);
     int checkLoop(int whichInst, Stack &stack);
     int checkJumps(int num);
+    void processFunctions();
 public:
     void add(std::string instruction);
     void run();

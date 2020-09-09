@@ -1,19 +1,7 @@
-:) count 1
-:b) penis true      
-
-<* penis
+:D hallo
 ><
-    :b) penis count != 5
-    B) count
-    :+S 1 count
-    
-    :) count1 count
-    :b) penis1 true
-    <* penis1
-    ><
-        :b) penis1 count1 != 6
-        B) count1
-        :+S 1 count1
-    <>
+    B) "Hallo welt"
+    :) penis "Hallo"
 <>
-B) "Hallo after"
+B) "Hallo ich bins"
+;) hallo 
