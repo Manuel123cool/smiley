@@ -71,3 +71,13 @@ The if statement is unsure where to process you code. So its an unsure emoji, fo
 	:( some statement : (
 <>
 ```
+
+Which loops are something that repeats its self on and on, like a heart, so we you the heart emoji.
+Followed by a block.
+```
+<* boolIdentifier
+><
+	:( some instructions : (
+<>
+```
+The loop will gos on as the bool identifier stays true.
