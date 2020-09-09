@@ -81,3 +81,17 @@ Followed by a block.
 <>
 ```
 The loop will gos on as the bool identifier stays true.
+
+Functions are useful when you have the same code on multiple spots.  The declaration of an function starts with a big grin, then the identifier. Then the code in a block
+```
+:D identifier
+ ><
+	:( Some code :(
+<>
+```
+Due to simplistic reasons, there aren’t any arguments. Just the variables of the parents namespace.
+
+To call the function write the winking emoji. Which shows what kind of player we are in the business.
+```
+;) identifier
+```
